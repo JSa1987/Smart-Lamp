@@ -1,5 +1,6 @@
 # Smart-Lamp
 EspHome conversion of a floor lamp.
+
 ![Lamp](https://user-images.githubusercontent.com/62815008/127373968-9bd5a7a4-c953-4ebd-9538-cae7b8b8da96.jpg)
 
 ## Components
