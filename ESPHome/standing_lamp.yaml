@@ -1,0 +1,105 @@
+esphome:
+  name: standing_lamp
+  comment: Standing lamp with reading lamp
+  platform: ESP8266
+  board: d1_mini
+
+wifi:
+  ssid: "SSID"
+  password: "SuperSecrete_Password"
+  manual_ip:
+    static_ip: 192.168.x.x
+    gateway: 192.168.x.x
+    subnet: 255.255.255.0
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Standing Lamp Fallback Hotspot"
+    password: "SuperSecrete_Password1"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "SuperSecrete_Password2"
+
+ota:
+  password: "SuperSecrete_Password3"
+
+light:
+  - platform: monochromatic
+    id: standing_lamp_tall
+    name: "Standing Lamp - Main"
+    output: standing_lamp_tall_pwm
+  - platform: monochromatic
+    id: standing_lamp_reading
+    name: "Standing Lamp - Reading"
+    output: standing_lamp_reading_pwm
+
+output:
+  - platform: esp8266_pwm
+    id: standing_lamp_tall_pwm
+    pin: D8
+    frequency: 1000 Hz
+    inverted: True
+  - platform: esp8266_pwm
+    id: standing_lamp_reading_pwm
+    pin: D2
+    frequency: 1000 Hz
+    inverted: True
+
+binary_sensor:
+  - platform: gpio
+    id: standing_lamp_tall_button
+    name: "Button Standing Lamp"
+    pin: D4
+    internal: True
+    on_press:
+      then:
+        - light.toggle:
+            id: standing_lamp_tall
+  - platform: gpio
+    id: standing_lamp_reading_button
+    name: "Button Reading Lamp"
+    pin: D1
+    internal: True
+    on_press:
+      then:
+        - light.toggle:
+            id: standing_lamp_reading
+
+sensor:
+  - platform: wifi_signal
+    id: standing_lamp_wifi
+    name: "Standing Lamp - WiFi Signal"
+    update_interval: 60s
+  - platform: rotary_encoder
+    id: standing_lamp_tall_encoder
+    name: "Rotary Encoder Standing Lamp"
+    pin_a: D6
+    pin_b: D7
+    internal: True
+    on_clockwise:
+      - light.dim_relative:
+          id: standing_lamp_tall
+          relative_brightness: 5%
+    on_anticlockwise:
+      - light.dim_relative:
+          id: standing_lamp_tall
+          relative_brightness: -5%
+  - platform: rotary_encoder
+    id: standing_lamp_reading_encoder
+    name: "Rotary Encoder Reading Lamp"
+    pin_a: D5
+    pin_b: D3
+    internal: True
+    on_clockwise:
+      - light.dim_relative:
+          id: standing_lamp_reading
+          relative_brightness: 5%
+    on_anticlockwise:
+      - light.dim_relative:
+          id: standing_lamp_reading
+          relative_brightness: -5%
