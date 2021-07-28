@@ -2,6 +2,7 @@
 EspHome conversion of a floor lamp.
 
 ![Lamp](https://user-images.githubusercontent.com/62815008/127373968-9bd5a7a4-c953-4ebd-9538-cae7b8b8da96.jpg)
+![Lamp HA](https://user-images.githubusercontent.com/62815008/127376623-b81c9bf0-b9d5-4578-8111-aeabfd27b475.png)
 
 ## Components
 - 1x D1 Minin (ESP8266)
